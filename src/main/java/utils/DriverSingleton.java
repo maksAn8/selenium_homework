@@ -1,6 +1,8 @@
+package utils;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import utils.Property;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +22,7 @@ public final class DriverSingleton {
         return driver;
     }
 
-    public void close() {
+    public static void close() {
         driver.quit();
     }
 }

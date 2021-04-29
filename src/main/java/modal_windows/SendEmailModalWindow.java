@@ -1,15 +1,13 @@
+package modal_windows;
+
 import lombok.Getter;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.DriverSingleton;
 
 @Getter
 public class SendEmailModalWindow {
-    private WebDriver driver;
-    private WebDriverWait wait;
-
     @FindBy(css = "#form .modal-header.shadow-sm span[data-tr='new_message']")
     private WebElement modalWindow;
 
@@ -25,9 +23,11 @@ public class SendEmailModalWindow {
     @FindBy(css = "#submit")
     private WebElement submitBtn;
 
+    @FindBy(css = "#modal-compose .modal-content .bar .close")
+    private WebElement closeBtn;
+
     public SendEmailModalWindow() {
-        driver = DriverSingleton.getDriver();
-        PageFactory.initElements(driver, this);
-        wait = new WebDriverWait(driver, 20);
+        PageFactory.initElements(DriverSingleton.getDriver(), this);
     }
+
 }

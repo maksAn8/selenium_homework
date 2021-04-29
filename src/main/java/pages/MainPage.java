@@ -1,5 +1,6 @@
 package pages;
 
+import interfaces.IMainPage;
 import lombok.Getter;
 import modal_windows.SendEmailModalWindow;
 import modal_windows.SettingsModalWindow;
@@ -13,7 +14,7 @@ import utils.DriverSingleton;
 import utils.Property;
 
 @Getter
-public class MainPage {
+public class MainPage implements IMainPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -26,7 +27,7 @@ public class MainPage {
     @FindBy(css = "#pre_button")
     private WebElement randomNameInput;
 
-    @FindBy(css = "div.dropdown-menu button:nth-of-type(6)")
+    @FindBy(css = ".dropdown-menu.show .dropdown-item:nth-of-type(6)")
     private WebElement domainDropDownItem;
 
     @FindBy(css = "#pre_settings")
@@ -40,6 +41,9 @@ public class MainPage {
 
     @FindBy(css = "#container-body .inbox .mail")
     private WebElement mail;
+
+    @FindBy(css = ".from.col-9.col-md-4 span")
+    private WebElement sender;
 
     @FindBy(css = ".bar span[data-tr='settings']")
     private WebElement settingsModalWindow;
@@ -69,7 +73,6 @@ public class MainPage {
 
     public MessagePage readMessage() {
         mail.click();
-        wait.until(ExpectedConditions.invisibilityOf(mail));
         return new MessagePage();
     }
 }
