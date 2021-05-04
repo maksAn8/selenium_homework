@@ -1,17 +1,16 @@
 package pages;
 
+import interfaces.IMessagePage;
 import lombok.Getter;
 import modal_windows.SendEmailModalWindow;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.DriverSingleton;
 
 @Getter
-public class MessagePage {
+public class MessagePage implements IMessagePage {
     private WebDriverWait wait;
     @FindBy(css = "#info .text-truncate")
     private WebElement sender;

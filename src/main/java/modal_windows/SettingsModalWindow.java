@@ -1,5 +1,6 @@
 package modal_windows;
 
+import interfaces.IModalWindow;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.DriverSingleton;
 
 @Getter
-public class SettingsModalWindow {
+public class SettingsModalWindow implements IModalWindow {
     private WebDriver driver;
     private WebDriverWait wait;
 

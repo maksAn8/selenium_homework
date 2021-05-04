@@ -11,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.DriverSingleton;
-import utils.Property;
 
 @Getter
 public class MainPage implements IMainPage {
@@ -45,6 +44,9 @@ public class MainPage implements IMainPage {
     @FindBy(css = ".from.col-9.col-md-4 span")
     private WebElement sender;
 
+    @FindBy(css = ".mail .text-truncate")
+    private WebElement subject;
+
     @FindBy(css = ".bar span[data-tr='settings']")
     private WebElement settingsModalWindow;
 
@@ -55,8 +57,6 @@ public class MainPage implements IMainPage {
         driver = DriverSingleton.getDriver();
         PageFactory.initElements(driver, this);
         wait = new WebDriverWait(driver, 20);
-        Property property = new Property();
-        driver.get(property.getAppMainPageUrl());
     }
 
     public SettingsModalWindow goToSettings() {

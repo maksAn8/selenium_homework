@@ -37,7 +37,7 @@ public class MainPageTest {
 
     @AfterClass
     public static void tearDown() {
-        DriverSingleton.close();
+        DriverSingleton.quit();
     }
 
     private void checkInfoMessage() {

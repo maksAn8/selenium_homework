@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" strict="true">
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout
+
+                    pattern="%n[%p] %d{HH:mm:ss} %logger{0}.%M [%X{id}] %highlight{:> %msg }{INFO=black, TRACE=blue, DEBUG=green, WARN=cyan bold }"/>
+        </Console>
+        <RollingFile
+                name="FileLog"
+                fileName="target/logs/log.txt"
+                filePattern="target/logs/tmp.log"
+                ignoreExceptions="false">
+            <PatternLayout
+                    disableAnsi="false"
+                    pattern="%highlight{%n[%-5level] %d{HH:mm:ss} %logger{36}.%M :> %msg}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="FileLog"/>
+        </Root>
+        <Logger name="org.springframework" level="error" additivity="false">
+            <AppenderRef ref="FileLog"/>
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+        <Logger name="org.apache.http" level="error" additivity="false">
+            <AppenderRef ref="FileLog"/>
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+        <Logger name="io.restassured" level="error" additivity="false">
+            <AppenderRef ref="FileLog"/>
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+    </Loggers>
+</Configuration>
