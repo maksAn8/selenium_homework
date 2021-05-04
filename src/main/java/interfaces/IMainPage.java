@@ -5,6 +5,8 @@ import modal_windows.SettingsModalWindow;
 import org.openqa.selenium.WebElement;
 import pages.MessagePage;
 
+import java.util.List;
+
 public interface IMainPage extends IPage {
     WebElement getRandomNameBtn();
 
@@ -25,6 +27,8 @@ public interface IMainPage extends IPage {
     WebElement getSender();
 
     WebElement getSubject();
+
+    List<WebElement> getSubjectsList();
 
     WebElement getSettingsModalWindow();
 

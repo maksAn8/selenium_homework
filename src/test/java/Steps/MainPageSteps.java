@@ -14,8 +14,8 @@ import utils.Property;
 
 public class MainPageSteps extends Steps {
     private IMainPage iMainPage;
-    private String secretAddress;
-    private String myEmail;
+    static String secretAddress;
+    static String myEmail;
 
     @Given("^I open Main page$")
     public void iOpenMainPage() {
@@ -76,27 +76,32 @@ public class MainPageSteps extends Steps {
     }
 
     @And("^I send email to (.*) with a subject \"(.*)\" and (.*) as email text$")
-    public void iSendEmailToMyselfWithASubjectAndSecretAddressAsEmailText(String emailReceiver, String emailSubject, String emailText) {
+    public void iSendEmail(String emailReceiver, String emailSubject, String emailText) {
         log.info("Opening of the write message modal window...");
         SendEmailModalWindow modal = iMainPage.writeMessage();
+
+        if(emailText.equals("secret address")) {
+            emailText = secretAddress;
+        }
+        if(emailReceiver.equals("myself")) {
+            emailReceiver = myEmail;
+        }
         Assert.assertTrue("New message modal window is not displayed",
                 iMainPage.getWriteMessageModalWindow().isDisplayed());
-        log.info("Sending message to: " + myEmail + ", subject: " + emailSubject + ", text: " + emailText);
-        if(emailReceiver.equals("myself")) {
-            modal.getToInput().sendKeys(myEmail);
-        } else {
-            modal.getToInput().sendKeys(emailReceiver);
-        }
+
+        log.info("Sending message to: " + emailReceiver + ", subject: " + emailSubject + ", text: " + emailText);
+        modal.getToInput().sendKeys(emailReceiver);
         modal.getSubjectInput().sendKeys(emailSubject);
         modal.getMsgTextInput().sendKeys(emailText);
         modal.getSubmitBtn().click();
+
         if (iMainPage.getWriteMessageModalWindow().isDisplayed()) {
             modal.getCloseBtn().click();
         }
     }
 
     @Then("^I wait for message with sender: (.*), subject: (.*)$")
-    public void iWaitForMessageWithTheseParams(String emailSender, String emailSubject) {
+    public void iWaitForMessage(String emailSender, String emailSubject) {
         if(emailSender.equals("myself")) {
             emailSender = myEmail;
         }
@@ -109,5 +114,12 @@ public class MainPageSteps extends Steps {
         Assert.assertEquals("Email theme mismatch",
                 emailSubject,
                 iMainPage.getSubject().getAttribute("textContent"));
+    }
+
+    @Then("^I check message is deleted$")
+    public void iCheckMessageIsDeleted() {
+        Assert.assertFalse("Message was not deleted",
+                iMainPage.getSubjectsList().
+                        stream().anyMatch(webElement -> webElement.getAttribute("textContent").equals("Re: Test")));
     }
 }

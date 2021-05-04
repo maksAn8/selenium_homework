@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.DriverSingleton;
 
+import java.util.List;
+
 @Getter
 public class MainPage implements IMainPage {
     private WebDriver driver;
@@ -46,6 +48,9 @@ public class MainPage implements IMainPage {
 
     @FindBy(css = ".mail .text-truncate")
     private WebElement subject;
+
+    @FindBy(css = "#container-body .inbox .mail .text-truncate")
+    private List<WebElement> subjectsList;
 
     @FindBy(css = ".bar span[data-tr='settings']")
     private WebElement settingsModalWindow;
